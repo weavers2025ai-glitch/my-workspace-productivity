@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My WorkSpace — Preview</title>
+<style>
+:root{
+  --bg:#0b0e1a; --bg2:#11152a; --glass:rgba(255,255,255,.06); --glass2:rgba(255,255,255,.09);
+  --stroke:rgba(255,255,255,.12); --text:#f2f4ff; --muted:#9aa3c7; --accent:#6c7bff; --accent2:#22d3ee;
+  --red:#ff5d73; --orange:#ffa94d; --green:#3ddc97; --yellow:#ffd43b; --card-shadow:0 8px 32px rgba(0,0,0,.35);
+}
+[data-theme="light"]{
+  --bg:#eef1f8; --bg2:#ffffff; --glass:rgba(255,255,255,.65); --glass2:rgba(255,255,255,.85);
+  --stroke:rgba(20,30,80,.10); --text:#141a33; --muted:#5b6486; --card-shadow:0 8px 28px rgba(60,80,160,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;background:radial-gradient(1200px 800px at 80% -10%,#26307a 0%,transparent 55%),radial-gradient(1000px 700px at -10% 110%,#0e4a5e 0%,transparent 50%),var(--bg);color:var(--text);min-height:100vh}
+[data-theme="light"] body{background:var(--bg)}
+a{color:var(--accent2)}
+.app{display:flex;min-height:100vh}
+/* Sidebar */
+.sidebar{width:248px;flex:0 0 248px;padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px;background:var(--glass);backdrop-filter:blur(22px);border-right:1px solid var(--stroke)}
+.logo{display:flex;align-items:center;gap:10px;padding:6px 10px 18px}
+.logo-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;box-shadow:0 6px 18px rgba(108,123,255,.45)}
+.logo h1{font-size:17px;letter-spacing:.2px}
+.logo small{display:block;color:var(--muted);font-size:11px;font-weight:500}
+.nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:13px;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s}
+.nav-item:hover{background:var(--glass2);color:var(--text)}
+.nav-item.active{background:linear-gradient(135deg,rgba(108,123,255,.28),rgba(34,211,238,.18));color:var(--text);border-color:var(--stroke)}
+.nav-item .ic{width:20px;text-align:center;font-size:15px}
+.side-foot{margin-top:auto;padding:10px;border-radius:13px;background:var(--glass);border:1px solid var(--stroke);font-size:12px;color:var(--muted);line-height:1.5}
+/* Main */
+.main{flex:1;padding:26px 28px 90px;max-width:1180px;margin:0 auto;width:100%}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.topbar h2{font-size:26px;letter-spacing:.2px}
+.topbar p{color:var(--muted);font-size:13px;margin-top:3px}
+.btn{border:1px solid var(--stroke);background:var(--glass);color:var(--text);padding:9px 15px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;backdrop-filter:blur(14px)}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;box-shadow:0 6px 18px rgba(108,123,255,.4)}
+.btn:active{transform:scale(.97)}
+.demo-banner{display:flex;gap:10px;align-items:center;background:linear-gradient(135deg,rgba(255,212,59,.16),rgba(255,169,77,.10));border:1px solid rgba(255,212,59,.35);color:var(--text);padding:11px 14px;border-radius:14px;font-size:13px;margin-bottom:18px}
+.grid{display:grid;gap:16px}
+.stats{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--glass);border:1px solid var(--stroke);border-radius:20px;padding:18px;backdrop-filter:blur(20px);box-shadow:var(--card-shadow)}
+.stat .num{font-size:30px;font-weight:800;margin-top:4px}
+.stat .lbl{color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.stat .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.cols{grid-template-columns:1.6fr 1fr}
+h3.sec{font-size:16px;margin:20px 0 10px}
+.task{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:15px;background:var(--glass);border:1px solid var(--stroke);margin-bottom:9px}
+.task .dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px}
+.task .t{flex:1;min-width:0}
+.task .t b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.task .t span{font-size:12px;color:var(--muted)}
+.chip{font-size:11px;font-weight:800;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.chip.urgent{background:rgba(255,93,115,.18);color:var(--red)}
+.chip.high{background:rgba(255,169,77,.18);color:var(--orange)}
+.chip.medium{background:rgba(255,212,59,.16);color:var(--yellow)}
+.chip.low{background:rgba(61,220,151,.16);color:var(--green)}
+.chip.st{background:var(--glass2);color:var(--muted)}
+.chip.overdue{background:rgba(255,93,115,.18);color:var(--red)}
+.progress{height:9px;border-radius:99px;background:var(--glass2);overflow:hidden;margin-top:9px}
+.progress i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.kcol h4{font-size:13px;color:var(--muted);margin-bottom:9px;text-transform:uppercase;letter-spacing:.5px}
+.kcard{background:var(--glass);border:1px solid var(--stroke);border-radius:14px;padding:12px;margin-bottom:9px;font-size:13px}
+.kcard b{display:block;margin-bottom:5px;font-size:13.5px}
+.kcard span{color:var(--muted);font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--stroke)}
+th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.cal .dow{font-size:11px;color:var(--muted);text-align:center;font-weight:800;text-transform:uppercase}
+.cal .day{min-height:74px;border-radius:13px;background:var(--glass);border:1px solid var(--stroke);padding:7px;font-size:12px;position:relative}
+.cal .day.dim{opacity:.35}
+.cal .day.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.cal .day .n{font-weight:800;font-size:13px}
+.cal .ev{display:block;margin-top:4px;font-size:10.5px;padding:2px 6px;border-radius:6px;background:rgba(108,123,255,.25);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal .ev.red{background:rgba(255,93,115,.25)}
+.note-card{border-left:3px solid var(--yellow)}
+.empty{text-align:center;color:var(--muted);padding:38px 10px;font-size:14px}
+.view{display:none}
+.view.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.bottomnav{display:none}
+.foot{margin-top:26px;color:var(--muted);font-size:12px;text-align:center;line-height:1.7}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}.kanban{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .sidebar{display:none}
+  .main{padding:18px 14px 96px}
+  .bottomnav{display:flex;position:fixed;left:10px;right:10px;bottom:10px;z-index:50;background:var(--glass2);backdrop-filter:blur(24px);border:1px solid var(--stroke);border-radius:22px;padding:8px 4px;justify-content:space-around;box-shadow:var(--card-shadow)}
+  .bottomnav button{background:none;border:none;color:var(--muted);font-size:10px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 6px}
+  .bottomnav button .ic{font-size:18px}
+  .bottomnav button.active{color:var(--text)}
+  .cal .day{min-height:56px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo"><div class="logo-badge">W</div><h1>My WorkSpace<small>Personal Productivity</small></h1></div>
+    <div id="sidenav"></div>
+    <div class="side-foot">Preview build — demo data only.<br>The full app saves your real work, tracks time and generates PDF reports.</div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div><h2 id="viewTitle">Dashboard</h2><p id="viewSub">Saturday, 14 November 2026 · Welcome back</p></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" id="themeBtn">☀️ Light</button>
+        <button class="btn primary">＋ Quick Add</button>
+      </div>
+    </div>
+    <div class="demo-banner">👋 <span><b>Preview mode.</b> This page mirrors the live My WorkSpace app with sample data so you can explore the design and sections. Data here doesn't save.</span></div>
+    <div id="views"></div>
+    <p class="foot">My WorkSpace — Tasks · Projects · Calendar · Events · Graphic Design · Websites · Clients · Notes · Reports<br>Full app available in your Muse Library.</p>
+  </main>
+</div>
+<nav class="bottomnav" id="bottomnav"></nav>
+<script>
+const SECTIONS=[
+ ["dashboard","🏠","Dashboard"],["tasks","✅","My Tasks"],["projects","📁","Projects"],
+ ["calendar","📅","Calendar"],["events","🎉","Event Management"],["designs","🎨","Graphic Design"],
+ ["websites","🌐","Website Management"],["clients","👥","Clients"],["notes","📝","Notes"],
+ ["reports","📊","Reports"],["archive","🗄️","Archive"],["settings","⚙️","Settings"]];
+const TASKS=[
+ {t:"Renew hosting for client site",c:"Website",p:"High",s:"In Progress",due:"12 Nov 2026",over:true},
+ {t:"Design Instagram post pack",c:"Design",p:"Urgent",s:"In Progress",due:"Today"},
+ {t:"Send invoice to Ahmed Trading",c:"Finance",p:"Medium",s:"Completed",due:"13 Nov 2026"},
+ {t:"Update portfolio website",c:"Website",p:"Medium",s:"In Progress",due:"16 Nov 2026"},
+ {t:"Prepare event checklist",c:"Event",p:"Low",s:"Pending",due:"20 Nov 2026"}];
+const pColor=p=>({Urgent:"#ff5d73",High:"#ffa94d",Medium:"#ffd43b",Low:"#3ddc97"}[p]);
+const chipP=p=>'<span class="chip '+p.toLowerCase()+'">'+p+'</span>';
+function taskRow(x){return '<div class="task"><span class="dot" style="background:'+pColor(x.p)+'"></span><div class="t"><b>'+x.t+'</b><span>'+x.c+' · Due '+x.due+'</span></div>'+(x.over?'<span class="chip overdue">Overdue</span>':'')+chipP(x.p)+'<span class="chip st">'+x.s+'</span></div>'}
+function stat(n,l,s){return '<div class="card stat"><div class="lbl">'+l+'</div><div class="num">'+n+'</div><div class="sub">'+s+'</div></div>'}
+const VIEWS={
+dashboard:()=>`
+ <div class="grid stats">${stat(5,"Total Tasks","2 due this week")}${stat(1,"Completed","Keep it up 🎉")}${stat(3,"Pending","1 in progress")}${stat(1,"Overdue","Needs attention")}</div>
+ <div class="grid cols" style="margin-top:16px">
+   <div><h3 class="sec">Today's Tasks</h3>${TASKS.filter(x=>x.due==="Today"||x.over).map(taskRow).join("")}
+   <h3 class="sec">Upcoming</h3>${TASKS.filter(x=>x.s!=="Completed"&&x.due!=="Today"&&!x.over).map(taskRow).join("")}</div>
+   <div><h3 class="sec">Project Progress</h3>
+     <div class="card"><b>Brand Identity Project</b><div class="progress"><i style="width:60%"></i></div><p style="color:var(--muted);font-size:12px;margin-top:7px">3 of 5 tasks completed · 60%</p></div>
+     <h3 class="sec">Upcoming Event</h3>
+     <div class="card"><b>🎉 Product Launch Event</b><p style="color:var(--muted);font-size:13px;margin-top:5px">28 Nov 2026 · Checklist 4/8 done</p></div>
+     <h3 class="sec">Website Alert</h3>
+     <div class="card"><b>🌐 mybusiness.com</b><p style="color:var(--orange);font-size:13px;margin-top:5px">Hosting expires in 20 days</p></div>
+   </div>
+ </div>`,
+tasks:()=>`
+ <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap"><button class="btn primary">＋ New Task</button><button class="btn">All</button><button class="btn">Today</button><button class="btn">Overdue</button><button class="btn">Completed</button></div>
+ ${TASKS.map(taskRow).join("")}
+ <h3 class="sec">Kanban</h3>
+ <div class="kanban">
+  ${["Pending","In Progress","Completed"].map(s=>'<div class="kcol"><h4>'+s+'</h4>'+TASKS.filter(x=>x.s===s).map(x=>'<div class="kcard"><b>'+x.t+'</b><span>'+x.c+' · '+x.due+'</span><div style="margin-top:6px">'+chipP(x.p)+'</div></div>').join("")+'</div>').join("")}
+ </div>`,
+projects:()=>`<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+ <div class="card"><b style="font-size:16px">📁 Brand Identity Project</b><p style="color:var(--muted);font-size:13px;margin:6px 0">Client: Ahmed Trading LLC</p><div class="progress"><i style="width:60%"></i></div><p style="color:var(--muted);font-size:12px;margin-top:7px">60% · 3/5 tasks · Deadline 30 Nov 2026</p></div>
+ <div class="card" style="display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;min-height:130px">＋ New Project</div></div>`,
+calendar:()=>{let cells="";["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(d=>cells+='<div class="dow">'+d+'</div>');
+ const first=new Date(2026,10,1).getDay(),days=new Date(2026,11,0).getDate();
+ for(let i=0;i<first;i++)cells+='<div class="day dim"></div>';
+ const ev={12:'<span class="ev red">Hosting renewal</span>',14:'<span class="ev">Instagram post pack</span>',16:'<span class="ev">Portfolio update</span>',20:'<span class="ev">Event checklist</span>',28:'<span class="ev">🎉 Product Launch</span>'};
+ for(let d=1;d<=days;d++)cells+='<div class="day'+(d===14?' today':'')+'"><span class="n">'+d+'</span>'+(ev[d]||"")+'</div>';
+ return '<div class="card"><b style="font-size:16px">November 2026</b><div class="cal" style="margin-top:14px">'+cells+'</div></div><p style="color:var(--muted);font-size:13px;margin-top:10px">In the full app, tap any date to create a task for that day.</p>'},
+events:()=>`<div class="card"><b style="font-size:16px">🎉 Product Launch Event</b><p style="color:var(--muted);font-size:13px;margin:6px 0 12px">28 Nov 2026 · 6:00 PM · Client: Ahmed Trading LLC</p>
+ ${[["Book venue",1],["Order banners",1],["Send invitations",1],["Prepare guest list",1],["Arrange catering",0],["Social media teaser",0],["Photographer booking",0],["Final rehearsal",0]].map(x=>'<div class="task"><span>'+(x[1]?"✅":"⬜")+'</span><div class="t"><b style="'+(x[1]?"text-decoration:line-through;opacity:.6":"")+'">'+x[0]+'</b></div></div>').join("")}
+ <p style="color:var(--muted);font-size:13px">Checklist progress: 4 of 8 done</p></div>`,
+designs:()=>`<div class="card"><table><tr><th>Design</th><th>Category</th><th>Status</th><th>Client</th></tr>
+ <tr><td><b>Company Logo — Final Draft</b></td><td>Logo Design</td><td><span class="chip st">Designing</span></td><td>Ahmed Trading LLC</td></tr>
+ <tr><td><b>November Offer Banner</b></td><td>Social Media Post</td><td><span class="chip st">Client Review</span></td><td>—</td></tr>
+ <tr><td><b>Business Card v2</b></td><td>Business Card</td><td><span class="chip st">Delivered</span></td><td>Ahmed Trading LLC</td></tr></table>
+ <p style="color:var(--muted);font-size:13px;margin-top:10px">13 design categories built in — Logo, Banner, Flyer, Brochure, Social Media, Business Card and more.</p></div>`,
+websites:()=>`<div class="card"><table><tr><th>Website</th><th>Domain Expiry</th><th>Hosting Expiry</th><th>Status</th></tr>
+ <tr><td><b>mybusiness.com</b></td><td>14 Mar 2027</td><td style="color:var(--orange)"><b>4 Dec 2026 · 20 days</b></td><td><span class="chip st">Active</span></td></tr></table>
+ <p style="color:var(--muted);font-size:13px;margin-top:10px">The full app warns you before domains and hosting expire.</p></div>`,
+clients:()=>`<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+ <div class="card"><b style="font-size:16px">👥 Ahmed Trading LLC</b><p style="color:var(--muted);font-size:13px;margin-top:6px;line-height:1.7">Contact: Ahmed<br>1 project · 3 designs · 2 events</p></div>
+ <div class="card" style="display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;min-height:110px">＋ New Client</div></div>`,
+notes:()=>`<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+ <div class="card note-card"><b>📌 Content ideas for November</b><p style="color:var(--muted);font-size:13px;margin-top:6px;line-height:1.6">Reels: before/after logo process. Post pack for the launch on the 28th. Collect client testimonials.</p></div>
+ <div class="card"><b>Supplier contacts</b><p style="color:var(--muted);font-size:13px;margin-top:6px;line-height:1.6">Print shop — banners in 2 days. Catering shortlist for events.</p></div></div>`,
+reports:()=>`<div class="grid stats">${stat(1,"Completed Today","Sat 14 Nov")}${stat(3,"Pending","Separated in report")}${stat("2h 15m","Time Tracked","Across 2 tasks")}${stat(1,"Overdue","Listed, never hidden")}</div>
+ <div class="card" style="margin-top:16px"><b>📄 Daily Report — 14 November 2026</b><p style="color:var(--muted);font-size:13.5px;line-height:1.8;margin-top:8px">In the full app this generates a professional A4 PDF: completed work, pending work, time spent per task, project progress, designs delivered and website alerts — ready to print or share. Cancelled tasks are never counted as completed.</p><button class="btn primary" style="margin-top:10px">Download Report (full app)</button></div>`,
+archive:()=>`<div class="card empty">🗄️ Nothing archived yet.<br><span style="font-size:13px">Completed old tasks, projects, events, designs and notes can be archived here and restored anytime.</span></div>`,
+settings:()=>`<div class="card"><b style="font-size:16px">⚙️ Settings</b>
+ <div class="task" style="margin-top:14px"><div class="t"><b>Appearance</b><span>Dark / Light mode</span></div><button class="btn" onclick="document.getElementById('themeBtn').click()">Toggle theme</button></div>
+ <div class="task"><div class="t"><b>Manage Categories</b><span>Task, design and event categories are fully editable — nothing is hardcoded</span></div></div>
+ <div class="task"><div class="t"><b>Backup & Restore</b><span>Export or import all your data as JSON</span></div></div>
+ <div class="task"><div class="t"><b>Demo Data</b><span>Sample [DEMO] data can be removed in one tap</span></div></div></div>`};
+function navHTML(mobile){return SECTIONS.map(s=>mobile
+ ?'<button data-v="'+s[0]+'"><span class="ic">'+s[1]+'</span>'+s[2].split(" ")[0]+'</button>'
+ :'<div class="nav-item" data-v="'+s[0]+'"><span class="ic">'+s[1]+'</span>'+s[2]+'</div>').join("")}
+document.getElementById("sidenav").innerHTML=navHTML(false);
+document.getElementById("bottomnav").innerHTML=navHTML(true);
+const viewsEl=document.getElementById("views");
+viewsEl.innerHTML=SECTIONS.map(s=>'<section class="view" id="v-'+s[0]+'">'+VIEWS[s[0]]()+'</section>').join("");
+function show(id){
+ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id==="v-"+id));
+ document.querySelectorAll("[data-v]").forEach(n=>n.classList.toggle("active",n.dataset.v===id));
+ const s=SECTIONS.find(x=>x[0]===id);document.getElementById("viewTitle").textContent=s[2];
+ window.scrollTo({top:0,behavior:"smooth"});}
+document.querySelectorAll("[data-v]").forEach(n=>n.addEventListener("click",()=>show(n.dataset.v)));
+show("dashboard");
+const tb=document.getElementById("themeBtn");
+tb.addEventListener("click",()=>{const h=document.documentElement;const dark=h.dataset.theme==="dark";h.dataset.theme=dark?"light":"dark";tb.textContent=dark?"🌙 Dark":"☀️ Light";});
+</script>
+</body>
+</html>
